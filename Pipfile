@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+pyyaml = "*"
+amadeus = "*"
+pylint = "*"
+invoke = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
+
+[scripts]
+amadeus_info = "python3 /Users/chiuzuchilumbu/Documents/project/comfywings-python/lib/amadeus_info.py"
+flight_info = "python3 /Users/chiuzuchilumbu/Documents/project/comfywings-python/lib/flight_info.py"

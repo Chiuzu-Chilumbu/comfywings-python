@@ -1,0 +1,2 @@
+# class for candidate flight 
+
