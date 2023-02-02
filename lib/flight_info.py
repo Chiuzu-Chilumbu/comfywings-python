@@ -23,6 +23,4 @@ response = amadeus.shopping.flight_offers_search.get(
 
 # write to yaml files
 with open('spec/fixtures/flight_results.yml', 'w') as file:
-    flight_results = yaml.dump(response.data, file)
-
-print(flight_results)
+   flight_results = yaml.dump(response.result, file)
