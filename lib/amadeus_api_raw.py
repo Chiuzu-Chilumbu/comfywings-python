@@ -2,6 +2,7 @@ from amadeus import Client, ResponseError
 import sys
 import yaml
 
+# needed to add files to the path
 sys.path.append('config')
 sys.path.append('spec/fixtures')
 
@@ -12,6 +13,7 @@ amadeus = Client(
     client_id=CONFIG['AMADEUS_KEY'],
     client_secret=CONFIG['AMADEUS_SECRET']
 )
+
 
 response = amadeus.shopping.flight_offers_search.get(
     originLocationCode='TPE',

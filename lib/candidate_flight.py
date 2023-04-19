@@ -1,9 +1,9 @@
 import sys
 import yaml
-import flight.py
+import flight
 
 
-class CandidateFLight :
+class CandidateFlight :
 	# class for flights
 	def __init__(self, flight_info):
 		self.flight_info = flight_info
