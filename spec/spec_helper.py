@@ -1,6 +1,7 @@
+"""import needed moduels"""
 import sys
-import yaml
 import unittest
+import yaml
 from amadeus import Client, ResponseError
 
 
@@ -8,7 +9,7 @@ sys.path.append('config')
 sys.path.append('spec/fixtures')
 sys.path.append('lib')
 
-# candidate flight
+"""import classes from files in path"""
 from candidate_flight import CandidateFlight
 from amadeus_api_class import AmadeusApi
 

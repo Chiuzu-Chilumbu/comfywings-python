@@ -1,13 +1,14 @@
-from amadeus import Client, ResponseError
+"""import required modules"""
 import sys
+from amadeus import Client
 import yaml
 
-# needed to add files to the path
+
 sys.path.append('config')
 sys.path.append('spec/fixtures')
 
 with open('config/secrets.yml', 'r') as file:
-	CONFIG = yaml.safe_load(file)
+    CONFIG = yaml.safe_load(file)
 
 amadeus = Client(
     client_id=CONFIG['AMADEUS_KEY'],
@@ -25,4 +26,4 @@ response = amadeus.shopping.flight_offers_search.get(
 
 # write to yaml files
 with open('spec/fixtures/flight_results.yml', 'w') as file:
-   flight_results = yaml.dump(response.result, file)
+    flight_results = yaml.dump(response.result, file)
