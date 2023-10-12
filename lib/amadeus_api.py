@@ -4,9 +4,6 @@ import yaml
 import json
 import requests
 
-from amadeus import Client, ResponseError
-from candidate_flight import CandidateFlight
-
 """add config director to path"""
 sys.path.append('config')
 
@@ -31,6 +28,7 @@ class AmadeusApi(AmadeusMixin):
         # Note: The `Request` class initialization requires two arguments
         responses = Request(self.token, self.secret).request_amadeus_auth_token()
 
+
 class Request(AmadeusMixin):
     def __init__(self, client_id, client_secret):
         self.client_id = client_id
@@ -49,11 +47,7 @@ class Request(AmadeusMixin):
         }
         response = requests.request("POST", self.version1_url_path('security/oauth2/token'), headers=headers, data=payload)
 
-        if response.status_code == 200:
-            return response.json()["access_token"]
-        else:
-            print(f"Failed to retrieve token: {response.text}")
-            return None
+        return response.json()["access_token"]
 
 class Response():
     class BadRequest(Exception):
@@ -84,17 +78,5 @@ class Response():
     def error(self):
         """Return the appropriate error class for the response code."""
         return self.HTTP_ERROR.get(self.code)
-
-
-# Usage examples
-response = Response(200)
-print(f"Is Successful? {response.is_successful()}")
-
-response = Response(401)
-print(f"Is Successful? {response.is_successful()}")
-if not response.is_successful():
-    error = response.error()
-    raise error("Unauthorized access - invalid credentials")
-
 
 
