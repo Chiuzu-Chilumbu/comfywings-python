@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+pyyaml = "*"
+amadeus = "*"
+pylint = "*"
+invoke = "*"
+requests-mock = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
+
+[scripts]
+amadeus_info = "python3 lib/amadeus_api_raw.py"
+amadeus_class_instance = "python3 lib/amadeus_api_class.py"
+specs = "pytest spec/test_spec_amadeus.py"
