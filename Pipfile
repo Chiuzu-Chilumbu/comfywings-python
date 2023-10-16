@@ -9,6 +9,7 @@ pyyaml = "*"
 amadeus = "*"
 pylint = "*"
 invoke = "*"
+requests-mock = "*"
 
 [dev-packages]
 
