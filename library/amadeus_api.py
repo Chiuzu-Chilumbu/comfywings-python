@@ -19,15 +19,6 @@ import requests
 class AmadeusMixin():
     AMADEUS_API_ENDPOINT = 'https://test.api.amadeus.com'
 
-class AmadeusApi(AmadeusMixin):
-    def __init__(self, token, secret):
-        self.token = token
-        self.secret = secret
-
-    def call_post_usr(self, url, post_content):
-        # Note: The `Request` class initialization requires two arguments
-        responses = Request(self.token, self.secret).request_amadeus_auth_token()
-
 
 class Request(AmadeusMixin):
     def __init__(self, client_id, client_secret):
@@ -35,21 +26,36 @@ class Request(AmadeusMixin):
         self.client_secret = client_secret
 
     def version1_url_path(self, path):
+        """path : str - path to api resource """
         return "{}/v1/{}".format(self.AMADEUS_API_ENDPOINT, path)
 
     def version2_url_path(self, path):
+        """path : str - path to api resource """
         return "{}/v2/{}".format(self.AMADEUS_API_ENDPOINT, path)
 
     def request_amadeus_auth_token(self):
-        payload = 'client_id={}&client_secret={}&grant_type=client_credentials'.format(self.client_id, self.client_secret)
+        payload = 'client_id={}&client_secret={}&grant_type=client_credentials'.format(
+            self.client_id, self.client_secret)
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-        response = requests.request("POST", self.version1_url_path('security/oauth2/token'), headers=headers, data=payload)
+        
+        response = requests.request(
+            "POST", self.version1_url_path('security/oauth2/token'), headers=headers, data=payload)
 
+        # Check the response status code
+        if response.status_code == 401:
+            # Raise Unauthorized exception if status code is 401
+            raise Response.Unauthorized("Unauthorized access")
+
+        # Raise Unexpected exception for other non-success status codes
+        if response.status_code != 200:
+            raise Response.Unexpected(f"Unexpected error: {response.status_code}")
+
+        # Assume the response is successful and contains "access_token" key
         return response.json()["access_token"]
 
-class Response():
+class Response(AmadeusMixin):
     class BadRequest(Exception):
         """A class to raise the bad request HTTP error."""
         pass
@@ -78,5 +84,6 @@ class Response():
     def error(self):
         """Return the appropriate error class for the response code."""
         return self.HTTP_ERROR.get(self.code)
+
 
 
